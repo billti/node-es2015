@@ -165,7 +165,8 @@ this adds to the disk space and time required for an `npm install`.
 In general, side-by-side is significantly more work and risk, and adds a significant
 degree of burden to the developer to ensure both versions stay in sync and behave
 identically. The reality is many developers will not get this exactly right, risking
-Node.js upgrades being seen as frequently "breaking code".
+Node.js upgrades being seen as frequently "breaking code". This is covered in more
+depth in https://github.com/billti/node-es2015/blob/master/fat_packages.md .
 
 #### Hoisting properties
 The current propsoal proposes that when a CommonJS module is imported using ES2015
@@ -302,19 +303,23 @@ that any module imported without a `package.json` is also defaulted to ES2015 fo
 (And if you are loading multiple modules with mixed formats, add a `package.json`).
 
 The general intent of the above is that:
+
 1. Any package you load from NPM already has a `package.json`.
 2. Any project large enough to have gradual migration almost certainly has a `package.json`
 3. Loose modules that you run directly probably are authored together and have a consistent format.
 4. For the rare cases that don't fall into the above, you need the minor overhead of a `package.json`.
 5. Most tools that need to tell the difference can be updated to understand a JSON field with globs.
 
-Side-note: For modules specified directly on the command-line (i.e. `node ./foo.js`), it is
+Optional: For modules specified directly on the command-line (i.e. `node ./foo.js`), it is
 **highly unlikely** they don't import something, as are of little use for side-effects or 
 exports only. There is also minimal hit in dual-parsing the one entry point file. Thus the
 above command with no switch could try parsing as CommonJS first, and if that has a parse
 error (e.g. has `import` or `export` statments) try as ES2015. This will likely mean either
 format works correctly practically all the time without needing the new switch.
 
-Side-side-note: The loader could also detect attempted assignments to a global `module.exports`
+Optional: The loader could also detect attempted assignments to a global `module.exports`
 or `exports` value if loading a module as ES2015 and give a helpful message such as 
 `Attempted to load CommonJS module "x" as a ES2015 module. See docs at... `
+
+The algorithms for the above proposals are outlined in more detail on the page at
+https://github.com/billti/node-es2015/blob/master/algorithms.md
