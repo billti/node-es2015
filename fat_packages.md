@@ -5,7 +5,7 @@ If a module is going to exist as a CommonJS module, then it should only exist as
 module - there is no value but much complexity in also including an ES2015 version that 
 should exhibit identical behavior, as the version used at runtime should be opaque.
 
-If a module wishes to take advantage of features only in ES2015, then it should exist only
+If a module wishes to take advantage of features only in the ES2015 module format, then it should exist only
 as an ES2015 module, and not also ship a CommonJS version that has different behavior when 
 loaded by "pre-ES2015 module support" Node.js runtimes. This could cause code to break
 without a single change other than upgrading the Node.js version used.
