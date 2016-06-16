@@ -6,12 +6,12 @@ to look for, and no module path mapping to perform. The only change being if no 
 in a `package.json` file, then it will attempt to find a `module` field value for the package entry point.
 
 ## Determining the module format
-Effectively, the module format defaults to CommonJS, unless the `package.json` has a `module` instead 
-of a `main` property, in which case the default is `ES2015`. Even then, globbing patterns may still
-set a default format of CommonJS for certain module paths. 
+Effectively, the module format defaults to CommonJS, unless the `-m` switch is provided, or the 
+`package.json` has a `module` instead of a `main` property, in which case the default is `ES2015`.
+Even then, globbing patterns may still set a default format of CommonJS for certain module paths. 
 
 1. Let `module_path` be the full path of the resolved module. 
-2. Let `module_format` equal `CommonJS`.
+2. Let `module_format` equal `ES2015` is Node was launched with the `-m` switch, else `CommonJS`.
 3. If the module is located in a package with a `package.json` file
   1. If the `package.json` file contains a `main` field, exit to step 4.
   2. If the `package.json` file does not contain a `module` field, exit to step 4.
